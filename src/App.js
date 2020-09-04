@@ -1,26 +1,26 @@
+import { ThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import theme from './custom-theme';
+import './index.css';
+import LoanCalculateSection from './components/LoanCalculateSection';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const useStyles = makeStyles((theme) => ({
+	'@global': {
+		body: {
+			backgroundImage: '-webkit-linear-gradient( 27deg, rgb(80,180,196) 0%, rgb(162,220,225) 100%)',
+			minHeight: '100vh',
+		},
+	},
+}));
+
+const App = () => {
+	const classes = useStyles();
+	return (
+		<ThemeProvider theme={theme}>
+			<CssBaseline classes={classes.global} />
+			<LoanCalculateSection />
+		</ThemeProvider>
+	);
 }
 
 export default App;
