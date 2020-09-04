@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	amount: {
 		textAlign: 'center',
+		'& h2': {
+			whiteSpace: 'nowrap',
+		},
 	}
 }));
 
@@ -33,6 +36,7 @@ const ResultingAmount = () => {
 	const getPeriod = useSelector(state => state.periodReducer);
 	const getPercent = useSelector(state => state.percentReducer);
 	
+	// Bad calculation, it is necessary to divide only active variable 
 	const result = getAmount / (getPeriod * getPercent);
 
 	return (

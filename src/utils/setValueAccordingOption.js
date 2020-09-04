@@ -1,12 +1,12 @@
-export const setValueAccordingOption = (option, one, two, three) => {
+export const setValueAccordingOption = (option, minValue, step, maxValue) => {
 	switch(option){
 		case 'electronics':
-			return one;
+			return minValue;
 		case 'car':
-			return two;
+			return step;
 		case 'realty':
-			return three;
+			return maxValue;
 		default:
-			return one;
+			return minValue;
 	}
 };

@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme) => ({
 		body: {
 			backgroundImage: '-webkit-linear-gradient( 27deg, rgb(80,180,196) 0%, rgb(162,220,225) 100%)',
 			minHeight: '100vh',
+			maxWidth: '100vh',
+			overflowX: 'hidden',
 		},
 	},
 }));

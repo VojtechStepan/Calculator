@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
 import { Box, Slider, Grid, Input, Typography, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { changeAmnout } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
 	sliderHolder: {
@@ -31,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
 		textTransform: 'none',
 		margin: theme.spacing(2, 'auto', 0, 'auto'),
 		transition: 'ease-in-out .3s',
+		padding: theme.spacing(0, 2),
 		'& input': {
 			textAlign: 'center',
 			padding: 0,
 			color: theme.palette.common.white,
-			width: 'auto',
 		},
 		[theme.breakpoints.up('md')]: {
 			margin: theme.spacing(0, 'auto'),
@@ -44,12 +46,32 @@ const useStyles = makeStyles((theme) => ({
 			boxShadow: '0px 0px 16px 2px rgba(60, 138, 147, 0.5)',
 		},
 	},
+	suffix: {
+		marginTop: 2,
+	}
 }));
 
-const ChoiceSlider = ({ question, initialValue, minValue, maxValue, step, suffix, onChange, handleSliderChange, handleInputChange, actualValue }) => {
+const ChoiceSlider = ({ 
+	question,
+	minValue,
+	maxValue,
+	step,
+	suffix,
+	handleSliderChange,
+	actualValue,
+	disabled
+}) => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const [value, setValue] = useState();
 
+	// If you want to enter the value manually - works only for the first slider, need refactor
+	const handleInputChange = (event) => {
+		setValue(event.target.value === '' ? '' : Number(event.target.value));
+		dispatch(changeAmnout(event.target.value));
+	};
+
+	// If the new value exceeds the range, it is displayed at the maximum slider value
 	const handleBlur = () => {
 		if (value < minValue) {
 			setValue(minValue);
@@ -57,12 +79,6 @@ const ChoiceSlider = ({ question, initialValue, minValue, maxValue, step, suffix
 			setValue(maxValue);
 		}
 	};
-
-	/* const SetNumberFormat = ({ inputRef, onChange, value, ...other }) => {
-		return (
-			value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-		);
-	}; */
 
 	return (
 		<Box className={classes.sliderHolder}>
@@ -72,12 +88,13 @@ const ChoiceSlider = ({ question, initialValue, minValue, maxValue, step, suffix
 						{question}
 					</Typography>
 					<Slider
-						value={value}
+						value={actualValue}
 						onChange={handleSliderChange}
 						aria-labelledby="input-slider"
 						min={minValue}
 						max={maxValue}
 						step={step}
+						disabled={disabled}
 					/>
 				</Grid>
 				<Grid item xs={12} md={4} container justify="center">
@@ -87,15 +104,21 @@ const ChoiceSlider = ({ question, initialValue, minValue, maxValue, step, suffix
 						onChange={handleInputChange}
 						onBlur={handleBlur}
 						type="text"
-						// inputComponent={SetNumberFormat}
+						disabled={disabled}
 						inputProps={{
 							step: step,
 							min: minValue,
 							max: maxValue,
+							defaultValue: actualValue,
 							type: 'number',
 							'aria-labelledby': 'input-slider',
+							// Missing number format according to PSD file
 						}}
-						endAdornment={<div>{suffix}</div>}
+						endAdornment={
+							<div className={classes.suffix}>
+								{suffix}
+							</div>
+						}
 					/>
 				</Grid>
 			</Grid>

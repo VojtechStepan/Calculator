@@ -19,14 +19,15 @@ const LoanOptions = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	const [age, setAge] = React.useState('');
+	const [option, setOption] = React.useState('');
 	const [open, setOpen] = React.useState(false);
 
 	const handleChange = (event) => {
-		setAge(event.target.value);
+		setOption(event.target.value);
 	};
 
-	dispatch(changeUserOption(age));
+	// Working, but improperly used, but handleChange returns the value one step back
+	dispatch(changeUserOption(option));
 
 	const handleClose = () => {
 		setOpen(false);
@@ -45,7 +46,7 @@ const LoanOptions = () => {
 					open={open}
 					onClose={handleClose}
 					onOpen={handleOpen}
-					value={age}
+					value={option}
 					onChange={handleChange}
 				>
 				<MenuItem value={'electronics'}>Electronics</MenuItem>

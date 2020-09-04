@@ -121,7 +121,7 @@ const theme = createMuiTheme({
 					color: SetRules.palette.common.white,
 				},
 				'&:hover': {
-					boxShadow: '0px 0px 24px 0px rgb(60, 138, 147)',
+					boxShadow: '0px 0px 16px 2px rgba(60, 138, 147, 0.5)',
 				},
 			},
 		},
